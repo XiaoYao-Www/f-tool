@@ -20,14 +20,14 @@ jobs:
           python -m pip install --upgrade pip
           pip install nuitka numpy pandas scipy matplotlib
 
-      - name: Download Dependency Walker
+      - name: Download and Extract Dependency Walker
         run: |
           # 創建 Nuitka 緩存目錄
           mkdir -p "$env:LOCALAPPDATA\Nuitka\Nuitka\Cache\downloads\depends\x86_64"
-          # 下載 Dependency Walker
-          curl -L -o "$env:LOCALAPPDATA\Nuitka\Nuitka\Cache\downloads\depends\x86_64\depends.exe" "https://dependencywalker.com/depends22_x64.zip"
-          # 解壓縮下載的檔案
-          powershell -Command "Expand-Archive -Path '$env:LOCALAPPDATA\Nuitka\Nuitka\Cache\downloads\depends\x86_64\depends.exe' -DestinationPath '$env:LOCALAPPDATA\Nuitka\Nuitka\Cache\downloads\depends\x86_64'"
+          # 下載 Dependency Walker ZIP 檔案
+          curl -L -o "$env:LOCALAPPDATA\Nuitka\Nuitka\Cache\downloads\depends\x86_64\depends22_x64.zip" "https://www.dependencywalker.com/depends22_x64.zip"
+          # 解壓縮 ZIP 檔案
+          powershell -Command "Expand-Archive -Path '$env:LOCALAPPDATA\Nuitka\Nuitka\Cache\downloads\depends\x86_64\depends22_x64.zip' -DestinationPath '$env:LOCALAPPDATA\Nuitka\Nuitka\Cache\downloads\depends\x86_64'"
         shell: pwsh
 
       - name: Build exe
