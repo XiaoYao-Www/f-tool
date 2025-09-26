@@ -1,12 +1,11 @@
 name: Build EXE with Nuitka
 
-# 不使用 push / pull_request
 on:
   workflow_dispatch:  # 手動觸發
 
 jobs:
   build:
-    runs-on: windows-latest   # Windows 才能編譯 .exe
+    runs-on: windows-latest  # Windows 用於編譯 .exe
 
     steps:
       - uses: actions/checkout@v4
@@ -21,11 +20,22 @@ jobs:
           python -m pip install --upgrade pip
           pip install nuitka numpy pandas scipy matplotlib
 
+      - name: Download Dependency Walker
+        run: |
+          # 創建 Nuitka 緩存目錄
+          mkdir -p "$env:LOCALAPPDATA\Nuitka\Nuitka\Cache\downloads\depends\x86_64"
+          # 下載 Dependency Walker
+          curl -L -o "$env:LOCALAPPDATA\Nuitka\Nuitka\Cache\downloads\depends\x86_64\depends.exe" "https://dependencywalker.com/depends22_x64.zip"
+          # 解壓縮下載的檔案
+          powershell -Command "Expand-Archive -Path '$env:LOCALAPPDATA\Nuitka\Nuitka\Cache\downloads\depends\x86_64\depends.exe' -DestinationPath '$env:LOCALAPPDATA\Nuitka\Nuitka\Cache\downloads\depends\x86_64'"
+        shell: pwsh
+
       - name: Build exe
         env:
           NUITKA_ASSUME_YES_FOR_DOWNLOADS: 1
         run: |
           python -m nuitka main.py --standalone --enable-plugin=matplotlib --enable-plugin=tk-inter -j 8 --output-dir=dist
+        shell: cmd
 
       - name: Zip output
         run: |
