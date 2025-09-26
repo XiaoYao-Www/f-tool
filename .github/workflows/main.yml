@@ -24,7 +24,7 @@ jobs:
 
       - name: Build exe
         run: |
-          python -m nuitka main.py --standalone --onefile --enable-plugin=numpy --enable-plugin=matplotlib --enable-plugin=tk-inter|PySide6|PySide2|PyQt6|PyQt5 -j 4 --output-dir=dist
+          python -m nuitka main.py --standalone --onefile --enable-plugin=numpy --enable-plugin=matplotlib --enable-plugin=tk-inter -j 8 --output-dir=dist
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
