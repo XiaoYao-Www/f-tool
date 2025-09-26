@@ -1,5 +1,6 @@
 name: Build EXE with Nuitka
 
+# 不使用 push / pull_request
 on:
   workflow_dispatch:  # 手動觸發
 
@@ -22,14 +23,9 @@ jobs:
 
       - name: Build exe
         env:
-          NUITKA_ASSUME_YES_FOR_DOWNLOADS: 1   # 自動允許下載 depends.exe
+          NUITKA_ASSUME_YES_FOR_DOWNLOADS: 1
         run: |
-          python -m nuitka main.py ^
-            --standalone ^
-            --enable-plugin=matplotlib ^
-            --enable-plugin=tk-inter ^
-            -j 8 ^
-            --output-dir=dist
+          python -m nuitka main.py --standalone --enable-plugin=matplotlib --enable-plugin=tk-inter -j 8 --output-dir=dist
 
       - name: Zip output
         run: |
