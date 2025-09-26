@@ -1,9 +1,8 @@
 name: Build EXE with Nuitka
 
+# 不使用 push / pull_request
 on:
-  push:
-    branches: [ main ]
-  pull_request:
+  workflow_dispatch:  # 手動觸發
 
 jobs:
   build:
