@@ -23,7 +23,7 @@ jobs:
 
       - name: Build exe
         run: |
-          python -m nuitka main.py --standalone --enable-dependency-walker --enable-plugin=matplotlib --enable-plugin=tk-inter -j 8 --output-dir=dist
+          python -m nuitka main.py --standalone --windows-dependency-tool=pefile --enable-plugin=matplotlib --enable-plugin=tk-inter -j 8 --output-dir=dist
 
       - name: Zip output
         run: |
